@@ -6,17 +6,26 @@
 //
 
 import SwiftUI
+import Home
+import Favorite
+import Profile
+import Swinject
+import Core
 
 struct MainView: View {
     
+    init() {
+        Core.parentContainer = Container.gameContainer
+    }
+    
     var body: some View {
         TabView {
-            HomeView()
+            HomeView(parentContainer: Container.gameContainer)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
             
-            FavoriteView()
+            FavoriteView(parentContainer: Container.gameContainer)
                 .tabItem {
                     Label("Favorite", systemImage: "heart")
                 }

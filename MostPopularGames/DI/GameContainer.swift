@@ -7,6 +7,11 @@
 
 import Foundation
 import Swinject
+import Core
+import Home
+import Profile
+import Detail
+import Favorite
 
 extension Container {
     static let gameContainer: Container = {
@@ -25,30 +30,36 @@ extension Container {
         container.register(GameRepositoryProtocol.self) { r in
             GameRepository(gameApi: r.resolve(GameApiProtocol.self)!, favoriteDB: r.resolve(FavoriteGameProvider.self)!)
         }
+        container.register(FavoriteRepositoryProtocol.self) { r in
+            FavoriteRepository(favoriteDB: r.resolve(FavoriteGameProvider.self)!)
+        }
+        container.register(DetailGameRepositoryProtocol.self) { r in
+            DetailGameRepository(gameApi: r.resolve(DetailGameApiProtocol.self)!)
+        }
         
         // Use Cases
         container.register(GetGamesUC.self) { r in
-            GetGames(gameRepository: r.resolve(GameRepositoryProtocol.self)!)
+            GetGames(gameRepository: r.resolve(GameRepositoryProtocol.self)!, favoriteRepository: r.resolve(FavoriteRepositoryProtocol.self)!)
         }
         container.register(GetDetailGameUC.self) { r in
-            GetDetailGame(gameRepository: r.resolve(GameRepositoryProtocol.self)!)
+            GetDetailGame(gameRepository: r.resolve(DetailGameRepositoryProtocol.self)!)
         }
         container.register(GetGameFavoriteUC.self) { r in
-            GetGameFavorite(gameRepository: r.resolve(GameRepositoryProtocol.self)!)
+            GetGameFavorite(repository: r.resolve(FavoriteRepositoryProtocol.self)!)
         }
         container.register(AddGameFavoriteUC.self) { r in
-            AddGameFavorite(gameRepository: r.resolve(GameRepositoryProtocol.self)!)
+            AddGameFavorite(repository: r.resolve(FavoriteRepositoryProtocol.self)!)
         }
         container.register(DeleteGameFavoriteUC.self) { r in
-            DeleteGameFavorite(gameRepository: r.resolve(GameRepositoryProtocol.self)!)
+            DeleteGameFavorite(repository: r.resolve(FavoriteRepositoryProtocol.self)!)
         }
         
         // View Models
         container.register(GameViewModel.self, factory: { r in
-            GameViewModel(
-                getGamesUC: r.resolve(GetGamesUC.self)!,
-                getDetailGameUC: r.resolve(GetDetailGameUC.self)!
-            )
+            GameViewModel(getGamesUC: r.resolve(GetGamesUC.self)!)
+        })
+        container.register(DetailGameVM.self, factory: { r in
+            DetailGameVM(getDetailGameUC: r.resolve(GetDetailGameUC.self)!)
         })
         container.register(FavoriteViewModel.self, factory: { r in
             FavoriteViewModel(
