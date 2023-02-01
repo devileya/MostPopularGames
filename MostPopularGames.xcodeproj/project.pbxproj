@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		970394A72982CD49001177B9 /* MostPopularGamesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970394A62982CD49001177B9 /* MostPopularGamesTests.swift */; };
-		971737BB29714451001415A3 /* GameContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971737BA29714451001415A3 /* GameContainer.swift */; };
 		974003412988F8C7003C811A /* Profile in Frameworks */ = {isa = PBXBuildFile; productRef = 974003402988F8C7003C811A /* Profile */; };
 		974003442988FB70003C811A /* Detail in Frameworks */ = {isa = PBXBuildFile; productRef = 974003432988FB70003C811A /* Detail */; };
 		974003472988FE8A003C811A /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 974003462988FE8A003C811A /* Core */; };
@@ -47,7 +46,6 @@
 /* Begin PBXFileReference section */
 		970394A42982CD49001177B9 /* MostPopularGamesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MostPopularGamesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		970394A62982CD49001177B9 /* MostPopularGamesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularGamesTests.swift; sourceTree = "<group>"; };
-		971737BA29714451001415A3 /* GameContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameContainer.swift; sourceTree = "<group>"; };
 		9740033F2988F7EA003C811A /* Profile */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Profile; path = Modules/Profile; sourceTree = "<group>"; };
 		974003422988FA03003C811A /* Detail */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Detail; path = Modules/Detail; sourceTree = "<group>"; };
 		974003452988FDE6003C811A /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = Modules/Core; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 		971737B929714439001415A3 /* DI */ = {
 			isa = PBXGroup;
 			children = (
-				971737BA29714451001415A3 /* GameContainer.swift */,
 				9740034E2989699D003C811A /* Assembler.swift */,
 			);
 			path = DI;
@@ -287,7 +284,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9740034F2989699D003C811A /* Assembler.swift in Sources */,
-				971737BB29714451001415A3 /* GameContainer.swift in Sources */,
 				975EC687296BD85E00337F2C /* MainView.swift in Sources */,
 				975EC685296BD85E00337F2C /* MostPopularGamesApp.swift in Sources */,
 			);

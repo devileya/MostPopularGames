@@ -8,5 +8,5 @@
 import Swinject
 
 public struct Core {
-    public static var parentContainer = Container()
+    public static var parentAssembler = Assembler()
 }

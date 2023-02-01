@@ -11,14 +11,18 @@ import Swinject
 import SwiftUtils
 import Core
 
-struct DetailGameView: View {
+public struct DetailGameView: View {
     let slug: String
     
-    @ObservedObject private var viewmodel = Container().resolve(DetailGameVM.self)!
+    @ObservedObject private var viewmodel = Core.parentAssembler.resolver.resolve(DetailGameVM.self)!
     
     @State var isLiked = false
     
-    var body: some View {
+    public init(slug: String) {
+        self.slug = slug
+    }
+    
+    public var body: some View {
         ZStack(alignment:.top) {
             if let data = viewmodel.detailGame {
                 if #available(iOS 15.0, *) {
@@ -165,6 +169,17 @@ struct RowContentView: View {
         .background(Color.red)
         .padding(.top, -8)
         .padding(.bottom, 1)
+    }
+}
+
+extension UINavigationController: UIGestureRecognizerDelegate {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = self
+    }
+
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return viewControllers.count > 1
     }
 }
 

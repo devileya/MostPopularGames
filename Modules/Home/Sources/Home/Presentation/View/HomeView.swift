@@ -10,18 +10,14 @@ import Swinject
 import SwiftUtils
 import Core
 import Favorite
+import Detail
 
 public struct HomeView: View {
     
-    private let parentContainer: Container
-    @ObservedObject private var gameVM: GameViewModel
-    @ObservedObject private var favoriteVM: FavoriteViewModel
+    public init(){}
     
-    public init(parentContainer: Container) {
-        self.parentContainer = parentContainer
-        self.gameVM = parentContainer.resolve(GameViewModel.self)!
-        self.favoriteVM = parentContainer.resolve(FavoriteViewModel.self)!
-    }
+    @ObservedObject private var gameVM: GameViewModel = Core.parentAssembler.resolver.resolve(GameViewModel.self)!
+    @ObservedObject private var favoriteVM: FavoriteViewModel = Core.parentAssembler.resolver.resolve(FavoriteViewModel.self)!
     
     @State var scrollOffset = CGFloat.zero
     
@@ -38,7 +34,7 @@ public struct HomeView: View {
                     LazyVStack(spacing:16) {
                         ForEach(Array(gameVM.games.enumerated()), id: \.offset) { (index, game) in
                             NavigationLink {
-//                                LazyNavigationView(DetailGameView(slug: game.slug))
+                                LazyNavigationView(DetailGameView(slug: game.slug))
                             } label: {
                                 GameListCell(game: game, addToFavorite: { game in
                                     favoriteVM.addFavorite(game: game)

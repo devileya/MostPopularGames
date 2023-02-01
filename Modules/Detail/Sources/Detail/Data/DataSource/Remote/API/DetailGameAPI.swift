@@ -8,11 +8,15 @@
 import Combine
 import Core
 
-struct DetailGameAPI: DetailGameApiProtocol {
+public struct DetailGameAPI: DetailGameApiProtocol {
     
     let client: ApiClient
     
-    func getDetailGame(slug: String) -> AnyPublisher<DetailGameResponse, Error> {
+    public init(client: ApiClient) {
+        self.client = client
+    }
+    
+    public func getDetailGame(slug: String) -> AnyPublisher<DetailGameResponse, Error> {
         return client.get("/api/games/\(slug)", queries: []).map(\.value).eraseToAnyPublisher()
     }
 }

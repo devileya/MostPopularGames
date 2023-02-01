@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import Core
+import Swinject
 
 @main
 struct MostPopularGamesApp: App {
+    init() {
+        Core.parentAssembler = Assembler.sharedAssembler
+    }
+    
     var body: some Scene {
         WindowGroup {
             MainView()

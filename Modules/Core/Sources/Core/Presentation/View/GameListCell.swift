@@ -15,6 +15,7 @@ public struct GameListCell: View {
     var game: GameModel
     let addToFavorite: (GameModel) -> Void
     let deleteToFavorite: (String) -> Void
+//    let onItemClick: (String) -> Void
     
     @State var isLiked = false
     
