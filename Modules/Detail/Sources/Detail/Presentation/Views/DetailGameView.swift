@@ -9,53 +9,75 @@ import SwiftUI
 import Kingfisher
 import Swinject
 import SwiftUtils
+import Core
 
 struct DetailGameView: View {
     let slug: String
     
-    @ObservedObject private var viewmodel = Container.gameContainer.resolve(GameViewModel.self)!
+    @ObservedObject private var viewmodel = Container().resolve(DetailGameVM.self)!
     
     @State var isLiked = false
     
     var body: some View {
         ZStack(alignment:.top) {
             if let data = viewmodel.detailGame {
-                Color.clear.background(
-                    KFImage(URL(string: data.backgroundImage))
-                        .resizable()
-                        .scaledToFill()
-                        .frame(minHeight: 250, maxHeight: 400)
-                        .edgesIgnoringSafeArea(.top)
-                        .safeAreaInset(edge: .bottom, content: { DetailGameContentView(data: data)
-                                .padding(.top, -10)
-                        })
-                )
+                if #available(iOS 15.0, *) {
+                    Color.clear.background(
+                        KFImage(URL(string: data.backgroundImage))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(minHeight: 250, maxHeight: 400)
+                            .edgesIgnoringSafeArea(.top)
+                            .safeAreaInset(edge: .bottom, content: { DetailGameContentView(data: data)
+                                    .padding(.top, -10)
+                            })
+                    )
+                } else {
+                    Color.clear.background(
+                        KFImage(URL(string: data.backgroundImage))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(minHeight: 250, maxHeight: 400)
+                            .edgesIgnoringSafeArea(.top)
+                    )
+                }
                 
-                Text(data.name)
-                    .font(.title)
-                    .padding(8)
-                    .foregroundColor(Color.white)
-                    .background(Color.black.opacity(0.8))
-                    .cornerRadius(10)
-                    .padding(.top, 25)
-                    .multilineTextAlignment(.center)
-                    .safeAreaInset(edge: .bottom) {
-                        VStack {
-                            Text(data.developers)
-                                .font(.title3)
-                                .padding(6)
-                                .background(Color.white.opacity(0.6))
-                            
-                            Text(Date(dateString: data.released).asLongDateString())
-                                .font(.subheadline)
-                                .padding(.vertical, 4)
-                                .padding(.horizontal, 30)
-                                .foregroundColor(Color.white)
-                                .background(Color.black.opacity(0.4))
-                                .cornerRadius(50)
-                                .padding(.top, 20)
+                if #available(iOS 15.0, *) {
+                    Text(data.name)
+                        .font(.title)
+                        .padding(8)
+                        .foregroundColor(Color.white)
+                        .background(Color.black.opacity(0.8))
+                        .cornerRadius(10)
+                        .padding(.top, 25)
+                        .multilineTextAlignment(.center)
+                        .safeAreaInset(edge: .bottom) {
+                            VStack {
+                                Text(data.developers)
+                                    .font(.title3)
+                                    .padding(6)
+                                    .background(Color.white.opacity(0.6))
+                                
+                                Text(Date(dateString: data.released).asLongDateString())
+                                    .font(.subheadline)
+                                    .padding(.vertical, 4)
+                                    .padding(.horizontal, 30)
+                                    .foregroundColor(Color.white)
+                                    .background(Color.black.opacity(0.4))
+                                    .cornerRadius(50)
+                                    .padding(.top, 20)
+                            }
                         }
-                    }
+                } else {
+                    Text(data.name)
+                        .font(.title)
+                        .padding(8)
+                        .foregroundColor(Color.white)
+                        .background(Color.black.opacity(0.8))
+                        .cornerRadius(10)
+                        .padding(.top, 25)
+                        .multilineTextAlignment(.center)
+                }
             } else if !viewmodel.isLoadingData {
                 Text("Data Not Found").font(.title)
             }
@@ -118,7 +140,6 @@ struct DetailGameContentView: View {
                 
             }
         }
-        .scrollIndicators(.hidden)
     }
 }
 

@@ -7,6 +7,6 @@
 
 import Combine
 
-protocol DetailGameApiProtocol {
+public protocol DetailGameApiProtocol {
     func getDetailGame(slug: String) -> AnyPublisher<DetailGameResponse, Error>
 }

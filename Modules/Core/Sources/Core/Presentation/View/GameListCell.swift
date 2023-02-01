@@ -18,11 +18,11 @@ public struct GameListCell: View {
     
     @State var isLiked = false
     
-    public init(game: GameModel, addToFavorite: addToFavorite: @escaping (GameModel) -> Void, deleteToFavorite: @escaping (String) -> Void, isLiked: State<Bool>) {
+    public init(game: GameModel, addToFavorite: @escaping (GameModel) -> Void, deleteToFavorite: @escaping (String) -> Void, isLiked: Bool?) {
         self.game = game
         self.addToFavorite = addToFavorite
         self.deleteToFavorite = deleteToFavorite
-        self.isLiked = isLiked
+        self._isLiked = State(initialValue: isLiked ?? false)
     }
     
     public var body: some View {

@@ -6,19 +6,17 @@
 //
 
 import Foundation
+import Core
 
-class GameViewModel: ObservableObject {
+public class GameViewModel: ObservableObject {
     
     private let getGamesUC: GetGamesUC
-    private let getDetailGameUC: GetDetailGameUC
     
-    init(getGamesUC: GetGamesUC, getDetailGameUC: GetDetailGameUC) {
+    public init(getGamesUC: GetGamesUC) {
         self.getGamesUC = getGamesUC
-        self.getDetailGameUC = getDetailGameUC
     }
     
     @Published var games = [GameModel]()
-    @Published var detailGame: DetailGameModel? = nil
     @Published var isLoadingData = true
     @Published var isLiked = false
     
@@ -41,16 +39,5 @@ class GameViewModel: ObservableObject {
         }
         
     }
-    
-    func getDetailGame(slug: String) {
-        self.isLoadingData = true
-        
-        let request = GetDetailRequest(slug: slug)
-        getDetailGameUC.execute(request: request) { detailGame in
-            self.detailGame = detailGame
-            self.isLoadingData = false
-        }
-        
-    }
-    
+
 }

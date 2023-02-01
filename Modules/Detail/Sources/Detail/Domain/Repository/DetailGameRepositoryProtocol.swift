@@ -5,4 +5,8 @@
 //  Created by Arif Siregar on 31/01/23.
 //
 
-import Foundation
+import Combine
+
+public protocol DetailGameRepositoryProtocol {
+    func getDetailGame(slug: String) -> AnyPublisher<DetailGameResponse, Error>
+}

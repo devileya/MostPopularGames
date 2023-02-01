@@ -6,24 +6,25 @@
 //
 
 import Foundation
+import Core
 
-protocol GetGameFavoriteUC {
+public protocol GetGameFavoriteUC {
     func execute(completion: @escaping ([GameModel]) -> Void)
     func executeBySlug(slug: String, completion: @escaping (GameModel) -> Void)
 }
 
-final class GetGameFavorite: GetGameFavoriteUC {
-    private let gameRepository: GameRepositoryProtocol
+public final class GetGameFavorite: GetGameFavoriteUC {
+    private let repository: FavoriteRepositoryProtocol
     
-    init(gameRepository: GameRepositoryProtocol) {
-        self.gameRepository = gameRepository
+    public init(repository: FavoriteRepositoryProtocol) {
+        self.repository = repository
     }
     
-    func execute(completion: @escaping ([GameModel]) -> Void) {
-        return gameRepository.getAllFavorites(completion: completion)
+    public func execute(completion: @escaping ([GameModel]) -> Void) {
+        return repository.getAllFavorites(completion: completion)
     }
     
-    func executeBySlug(slug: String, completion: @escaping (GameModel) -> Void) {
-        return gameRepository.getFavoriteBySlug(slug: slug, completion: completion)
+    public func executeBySlug(slug: String, completion: @escaping (GameModel) -> Void) {
+        return repository.getFavoriteBySlug(slug: slug, completion: completion)
     }
 }

@@ -7,14 +7,32 @@
 
 import Foundation
 import CoreData
-import Core
 
 public class FavoriteGameProvider {
     
     public init(){}
     
+//    lazy var persistentContainer: NSPersistentContainer = {
+//        let container = NSPersistentContainer(name: "FavoriteGameModel")
+//
+//        container.loadPersistentStores { _, error in
+//            guard error == nil else {
+//                fatalError("Persistent Container Error \(String(describing: error))")
+//            }
+//        }
+//        container.viewContext.automaticallyMergesChangesFromParent = false
+//        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//        container.viewContext.shouldDeleteInaccessibleFaults = true
+//        container.viewContext.undoManager = nil
+//
+//        return container
+//    }()
+    
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "FavoriteGameModel")
+          let bundle = Bundle.module
+          let modelURL = bundle.url(forResource: "FavoriteGameModel", withExtension: ".momd")!
+          let model = NSManagedObjectModel(contentsOf: modelURL)!
+          let container = NSPersistentCloudKitContainer(name: "FavoriteGameModel", managedObjectModel: model)
         
         container.loadPersistentStores { _, error in
             guard error == nil else {
@@ -28,11 +46,11 @@ public class FavoriteGameProvider {
         
         return container
     }()
-    
+
     private func newTaskContext() -> NSManagedObjectContext {
         let taskContext = persistentContainer.newBackgroundContext()
         taskContext.undoManager = nil
-        
+
         taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return taskContext
     }
@@ -127,27 +145,27 @@ public class FavoriteGameProvider {
         _ rating: Double,
         completion: @escaping() -> Void
     ) {
-        let taskContext = newTaskContext()
-        taskContext.perform {
-            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorite")
-            fetchRequest.fetchLimit = 1
-            fetchRequest.predicate = NSPredicate(format: "id == \(id)")
-            if let result = try? taskContext.fetch(fetchRequest), let member = result.first as? Favorite {
-                member.setValue(id, forKeyPath: "id")
-                member.setValue(slug, forKeyPath: "slug")
-                member.setValue(name, forKeyPath: "name")
-                member.setValue(released, forKeyPath: "released")
-                member.setValue(platforms, forKeyPath: "platforms")
-                member.setValue(backgroundImage, forKeyPath: "backgroundImage")
-                member.setValue(rating, forKeyPath: "rating")
-                do {
-                    try taskContext.save()
-                    completion()
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
-                }
-            }
-        }
+//        let taskContext = newTaskContext()
+//        taskContext.perform {
+//            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteEntity")
+//            fetchRequest.fetchLimit = 1
+//            fetchRequest.predicate = NSPredicate(format: "id == \(id)")
+//            if let result = try? taskContext.fetch(fetchRequest), let member = result.first as? FavoriteEntity {
+//                member.setValue(id, forKeyPath: "id")
+//                member.setValue(slug, forKeyPath: "slug")
+//                member.setValue(name, forKeyPath: "name")
+//                member.setValue(released, forKeyPath: "released")
+//                member.setValue(platforms, forKeyPath: "platforms")
+//                member.setValue(backgroundImage, forKeyPath: "backgroundImage")
+//                member.setValue(rating, forKeyPath: "rating")
+//                do {
+//                    try taskContext.save()
+//                    completion()
+//                } catch let error as NSError {
+//                    print("Could not save. \(error), \(error.userInfo)")
+//                }
+//            }
+//        }
     }
     
     public func deleteAllFavorite(completion: @escaping() -> Void) {

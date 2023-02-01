@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import Core
 
-class FavoriteViewModel: ObservableObject {
+public class FavoriteViewModel: ObservableObject {
     
     private let getGameFavoriteUC: GetGameFavoriteUC
     private let addGameFavoriteUC: AddGameFavoriteUC
     private let deleteGameFavoriteUC: DeleteGameFavoriteUC
     
-    init(getGameFavoriteUC: GetGameFavoriteUC, addGameFavoriteUC: AddGameFavoriteUC, deleteGameFavoriteUC: DeleteGameFavoriteUC) {
+    public init(getGameFavoriteUC: GetGameFavoriteUC, addGameFavoriteUC: AddGameFavoriteUC, deleteGameFavoriteUC: DeleteGameFavoriteUC) {
         self.getGameFavoriteUC = getGameFavoriteUC
         self.addGameFavoriteUC = addGameFavoriteUC
         self.deleteGameFavoriteUC = deleteGameFavoriteUC
@@ -21,7 +22,7 @@ class FavoriteViewModel: ObservableObject {
     
     @Published var favoriteGames = [GameModel]()
     
-    func addFavorite(game: GameModel) {
+    public func addFavorite(game: GameModel) {
         addGameFavoriteUC.execute(game: game) {
             DispatchQueue.main.async {
                 print("success add favorite")
@@ -30,7 +31,7 @@ class FavoriteViewModel: ObservableObject {
         }
     }
     
-    func deleteFavoriteBySlug(slug: String) {
+    public func deleteFavoriteBySlug(slug: String) {
         deleteGameFavoriteUC.execute(slug: slug) {
             DispatchQueue.main.async {
                 print("success delete favorite")
@@ -39,7 +40,7 @@ class FavoriteViewModel: ObservableObject {
         }
     }
     
-    func getAllFavorite() {
+    public func getAllFavorite() {
         getGameFavoriteUC.execute { games in
             DispatchQueue.main.async {
                 self.favoriteGames = games

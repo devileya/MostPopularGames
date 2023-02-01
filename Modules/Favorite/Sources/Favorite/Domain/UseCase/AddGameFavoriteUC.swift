@@ -6,19 +6,20 @@
 //
 
 import Foundation
+import Core
 
-protocol AddGameFavoriteUC {
+public protocol AddGameFavoriteUC {
     func execute(game: GameModel, completion: @escaping () -> Void)
 }
 
-final class AddGameFavorite: AddGameFavoriteUC {
-    private let gameRepository: GameRepositoryProtocol
+public final class AddGameFavorite: AddGameFavoriteUC {
+    private let repository: FavoriteRepositoryProtocol
     
-    init(gameRepository: GameRepositoryProtocol) {
-        self.gameRepository = gameRepository
+    public init(repository: FavoriteRepositoryProtocol) {
+        self.repository = repository
     }
     
-    func execute(game: GameModel, completion: @escaping () -> Void) {
-        return gameRepository.addFavorite(game: game, completion: completion)
+    public func execute(game: GameModel, completion: @escaping () -> Void) {
+        return repository.addFavorite(game: game, completion: completion)
     }
 }

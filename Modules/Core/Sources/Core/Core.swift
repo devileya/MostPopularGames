@@ -1,8 +1,12 @@
 //
-//  File.swift
+//  Core.swift
 //  
 //
 //  Created by Arif Siregar on 01/02/23.
 //
 
-import Foundation
+import Swinject
+
+public struct Core {
+    public static var parentContainer = Container()
+}

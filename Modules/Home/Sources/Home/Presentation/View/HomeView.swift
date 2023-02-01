@@ -8,15 +8,24 @@
 import SwiftUI
 import Swinject
 import SwiftUtils
+import Core
+import Favorite
 
-struct HomeView: View {
+public struct HomeView: View {
     
-    @ObservedObject private var gameVM = Container.gameContainer.resolve(GameViewModel.self)!
-    @ObservedObject private var favoriteVM = Container.gameContainer.resolve(FavoriteViewModel.self)!
+    private let parentContainer: Container
+    @ObservedObject private var gameVM: GameViewModel
+    @ObservedObject private var favoriteVM: FavoriteViewModel
+    
+    public init(parentContainer: Container) {
+        self.parentContainer = parentContainer
+        self.gameVM = parentContainer.resolve(GameViewModel.self)!
+        self.favoriteVM = parentContainer.resolve(FavoriteViewModel.self)!
+    }
     
     @State var scrollOffset = CGFloat.zero
     
-    var body: some View {
+    public var body: some View {
         NavigationView {
             if gameVM.isLoadingData && gameVM.nextPage == 1 {
                 VStack(alignment:.center) {
@@ -29,7 +38,7 @@ struct HomeView: View {
                     LazyVStack(spacing:16) {
                         ForEach(Array(gameVM.games.enumerated()), id: \.offset) { (index, game) in
                             NavigationLink {
-                                LazyNavigationView(DetailGameView(slug: game.slug))
+//                                LazyNavigationView(DetailGameView(slug: game.slug))
                             } label: {
                                 GameListCell(game: game, addToFavorite: { game in
                                     favoriteVM.addFavorite(game: game)
@@ -51,7 +60,6 @@ struct HomeView: View {
                     }
                     
                 }.navigationBarTitle("Most Popular Games 2022", displayMode: .inline)
-                    .scrollIndicators(.hidden)
                 
             }
         }
@@ -69,8 +77,8 @@ struct ViewOffsetKey: PreferenceKey {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
-}
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeView()
+//    }
+//}

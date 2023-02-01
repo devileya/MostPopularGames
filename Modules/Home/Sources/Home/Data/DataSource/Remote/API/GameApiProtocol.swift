@@ -8,6 +8,6 @@
 import Foundation
 import Combine
 
-protocol GameApiProtocol {
+public protocol GameApiProtocol {
     func getGames(ordering: String?, dates: String?, page: Int) -> AnyPublisher<MostPopularGamesResponse, Error>
 }

@@ -8,18 +8,27 @@
 import SwiftUI
 import Swinject
 import SwiftUtils
+import Core
 
-struct FavoriteView: View {
+public struct FavoriteView: View {
     
-    @ObservedObject private var favoriteVM = Container.gameContainer.resolve(FavoriteViewModel.self)!
+    private let parentContainer: Container
+    @ObservedObject private var favoriteVM: FavoriteViewModel
     
-    var body: some View {
+    public init(parentContainer: Container) {
+        self.parentContainer = parentContainer
+        self.favoriteVM = parentContainer.resolve(FavoriteViewModel.self)!
+    }
+    
+//    @ObservedObject private var favoriteVM = Core.parentContainer.resolve(FavoriteViewModel.self)!
+    
+    public var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing:16) {
                     ForEach(favoriteVM.favoriteGames) { game in
                         NavigationLink {
-                            LazyNavigationView(DetailGameView(slug: game.slug))
+//                            LazyNavigationView(DetailGameView(slug: game.slug))
                         } label: {
                             GameListCell(game: game, addToFavorite: { game in
                                 favoriteVM.addFavorite(game: game)
@@ -30,7 +39,6 @@ struct FavoriteView: View {
                     }
                 }
             }.navigationBarTitle("My Favorite Games", displayMode: .inline)
-                .scrollIndicators(.hidden)
         }
         .onAppear {
             favoriteVM.getAllFavorite()
@@ -38,8 +46,8 @@ struct FavoriteView: View {
     }
 }
 
-struct FavoriteView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoriteView()
-    }
-}
+//struct FavoriteView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FavoriteView()
+//    }
+//}

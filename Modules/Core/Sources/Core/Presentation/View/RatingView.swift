@@ -8,14 +8,14 @@
 import SwiftUI
 
 public struct RatingView: View {
-    public var rating:CGFloat = 0.0
-    public var maxRating = 5
-    public var size = 12.0
-    public var inactiveColor = Color.gray
-    public var activeColor = Color.yellow
-    public var showText = true
+    var rating:CGFloat = 0.0
+    var maxRating = 5
+    var size = 12.0
+    var inactiveColor = Color.gray
+    var activeColor = Color.yellow
+    var showText = true
     
-    public init(rating: CGFloat, maxRating: Int, size: Float, inactiveColor: Color, activeColor: Color, showText: Bool) {
+    public init(rating: CGFloat = 0.0, maxRating: Int = 5, size: Double = 12.0, inactiveColor: Color = Color.gray, activeColor: Color = Color.yellow, showText: Bool = true) {
         self.rating = rating
         self.maxRating = maxRating
         self.size = size

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct MostPopularGamesResponse: Codable, Identifiable {
-    let id = UUID().uuidString
+public struct MostPopularGamesResponse: Codable, Identifiable {
+    public let id = UUID().uuidString
     let count: Int
     let next: String?
     let previous: String?

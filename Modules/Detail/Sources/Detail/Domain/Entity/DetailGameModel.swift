@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct DetailGameModel: Identifiable {
-    let id: Int
+public struct DetailGameModel: Identifiable {
+    public let id: Int
     let slug: String
     let name: String
     let released: String

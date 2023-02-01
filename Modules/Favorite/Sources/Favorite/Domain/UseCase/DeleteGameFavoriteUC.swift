@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol DeleteGameFavoriteUC {
+public protocol DeleteGameFavoriteUC {
     func execute(slug: String, completion: @escaping () -> Void)
 }
 
-final class DeleteGameFavorite: DeleteGameFavoriteUC {
-    private let gameRepository: GameRepositoryProtocol
+public final class DeleteGameFavorite: DeleteGameFavoriteUC {
+    private let repository: FavoriteRepositoryProtocol
     
-    init(gameRepository: GameRepositoryProtocol) {
-        self.gameRepository = gameRepository
+    public init(repository: FavoriteRepositoryProtocol) {
+        self.repository = repository
     }
     
-    func execute(slug: String, completion: @escaping () -> Void) {
-        return gameRepository.deleteFavoriteBySlug(slug: slug, completion: completion)
+    public func execute(slug: String, completion: @escaping () -> Void) {
+        return repository.deleteFavoriteBySlug(slug: slug, completion: completion)
     }
 }
